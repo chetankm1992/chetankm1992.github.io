@@ -360,7 +360,7 @@ ul#nav li.current a { color: #F06000; }
 #skills .header-col { padding-top: 9px; }
 #skills .main-col { padding-right: 10%; }
 
-#skills .education, .work {
+#skills .education, .work .kinect_blog {
    margin-bottom: 48px;
    padding-bottom: 24px;
    border-bottom: 1px solid #E8E8E8;
@@ -410,7 +410,7 @@ ul#nav li.current a { color: #F06000; }
 #projects .header-col { padding-top: 9px; }
 #projects .main-col { padding-right: 10%; }
 
-#projects .education, .work {
+#projects .education, .work .kinect_blog {
    margin-bottom: 48px;
    padding-bottom: 24px;
    border-bottom: 1px solid #E8E8E8;
@@ -460,7 +460,7 @@ ul#nav li.current a { color: #F06000; }
 #publication .header-col { padding-top: 9px; }
 #publication .main-col { padding-right: 10%; }
 
-#publication .education, .work {
+#publication .education, .work .kinect_blog {
    margin-bottom: 48px;
    padding-bottom: 24px;
    border-bottom: 1px solid #E8E8E8;
@@ -508,7 +508,7 @@ ul#nav li.current a { color: #F06000; }
 #services .header-col { padding-top: 9px; }
 #services .main-col { padding-right: 10%; }
 
-#services .education, .work {
+#services .education, .work .kinect_blog {
    margin-bottom: 48px;
    padding-bottom: 24px;
    border-bottom: 1px solid #E8E8E8;
@@ -527,6 +527,55 @@ ul#nav li.current a { color: #F06000; }
    font: 15px/24px 'opensans-regular', sans-serif;
    margin-top: 6px;
 }
+
+/* kinect_blog section */
+
+#kinect_blog {
+   background: #fff;
+   padding-top: 60px;
+   //padding-bottom: 72px;
+   overflow: hidden;
+}
+
+#kinect_blog a, #kinect_blog a:visited  { color: #11ABB0; }
+#kinect_blog a:hover, #kinect_blog a:focus { color: #313131; }
+
+#kinect_blog h1 {
+   font: 18px/24px 'opensans-bold', sans-serif;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+}
+#kinect_blog h1 span {
+   border-bottom: 3px solid #11ABB0;
+   padding-bottom: 6px;
+}
+#kinect_blog h3 {
+   font: 20px/30px 'opensans-bold', sans-serif;
+}
+
+#kinect_blog .header-col { padding-top: 9px; }
+#kinect_blog .main-col { padding-right: 10%; }
+
+#kinect_blog .kinect_blog, .work {
+   margin-bottom: 48px;
+   padding-bottom: 24px;
+   border-bottom: 1px solid #E8E8E8;
+}
+#kinect_blog .info {
+   font: 16px/24px 'librebaskerville-italic', serif;
+   color: #6E7881;
+   margin-bottom: 18px;
+   margin-top: 9px;
+}
+#kinect_blog .info span {
+   margin-right: 5px;
+   margin-left: 5px;
+}
+#kinect_blog .date {
+   font: 15px/24px 'opensans-regular', sans-serif;
+   margin-top: 6px;
+}
+
 
 /* ------------------------------------------------------------------ */
 /* d. Resume Section
@@ -558,7 +607,7 @@ ul#nav li.current a { color: #F06000; }
 #resume .header-col { padding-top: 9px; }
 #resume .main-col { padding-right: 10%; }
 
-.education, .work {
+.education, .work .kinect_blog{
    margin-bottom: 48px;
    padding-bottom: 24px;
    border-bottom: 1px solid #E8E8E8;
