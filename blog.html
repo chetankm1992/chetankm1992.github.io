@@ -35,7 +35,15 @@
 <style type="text/css">
 	.p_style{
 		 margin-bottom: 0px !important;
+       text-align: justify;
 	}
+   pre code{
+          background-color: #eee;
+          border: 1px solid #999;
+          display: block;
+          padding-left: 5px;
+          font-size: 12px;
+   }
 </style>
 
 <body>
@@ -139,6 +147,9 @@
 
                   <!--<h3>University of Massachusetts, Dartmouth US</h3>-->
                   <p>I have worked on Skeleton Based Action Recognition using Kinect V2 to determine the difference between large bechmark datasets such as <a href="http://www.icst.pku.edu.cn/struct/Projects/PKUMMD.html">PKU-MMD</a> and <a href="http://www3.cs.stonybrook.edu/~kyun/research/kinect_interaction/index.html">SBU-Kinect</a> dataset. First I have collected data using Kinect V2 using Matlab and then used a <a href="https://arxiv.org/abs/1804.06055">Convolutional Neural Network (CNN)</a> model for prediction. In this post, I will walk you with all the steps I followed and methods I used for this piece of work.</p>
+                  <img src="images/kinect_blog/Kinect_V2.jpg" alt="Kinect V2">
+                  [<a href="https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwj39vLT-8LdAhUNON8KHYDVA5AQjRx6BAgBEAU&url=https%3A%2F%2Fwww.ignatiuz.com%2Fblog%2Fnet%2Fkinect-v2-for-windows%2F&psig=AOvVaw2LSFOlh2FstmJjEtkZKCr-&ust=1537305510490132">Source</a>]
+
 
                   <!-- <p>
                   Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
@@ -167,9 +178,68 @@
                   <p class="p_style">i) First is installation of <span style="color: royalblue">"Image Acquisition Toolbox"</span> which you can easily install using Matlab Add-Ons option in Home tab. You can easily install as trial version if you don't want subscription.</p>
                   <p class="p_style">ii) Now you need to install <span style="color: royalblue">"Image Acquisition Toolbox Support Package for Kinect for Windows Sensor"</span> which can be also be installed using Add-Ons in Matlab.
                   <p class="p_style">iii) Now when you run <span style="color: royalblue">"imaqhwinfo"</span> command in Matlab command prompt, if everthing is installed properly then it will display Kinect as Installed Adaptors. When you get this then you are all set for getting data from Kinect in Matlab.</p>
+                  <br/>
 
                   <h3>2) Getting Data into Matlab</h3>
-                  <p>There is good source <a href="https://www.mathworks.com/help/supportpkg/kinectforwindowsruntime/examples/plot-skeletons-with-the-kinect-v2.html">Skeleton Viewer for Kinect V2 Skeletal Data</a> to follow inorder to see what data sort of data you can get by Kinect and how it is stored and you can draw skeleton on top of RGB image.</p>
+                  <p class="p_style">There is good source <a target="_blank" href="https://www.mathworks.com/help/supportpkg/kinectforwindowsruntime/examples/plot-skeletons-with-the-kinect-v2.html">Skeleton Viewer for Kinect V2 Skeletal Data</a> to follow inorder to see what sort of data you can get by Kinect and how it is stored and you can draw skeleton on top of RGB image.</p>
+                  <p class="p_style">After running the code given in Matlab link then you open the metadata variable in Maltab and it will contain multiple variables. If you check <span style="color: royalblue">"IsBodyTracked"</span>, it will give you the information that anybody has been tracked or not. It can track six person at a time and if you notice there will be values like [0,0,0,0,0,0] shows no one is tracked and if values like [0,0,0,1,0,1] means two bodies are tracked. The position of 1's doesn't matter here.</p>
+                  <p class="p_style">Now, if you see <span style="color: royalblue">"JointPositions"</span> variable, it will give you x,y,z coordinate values in meters of each body joint (Kinect V2 can recognize 25 body joints). </p>
+                  <img src="images/kinect_blog/joints.gif" alt="Skeleton Joints">
+                  [<a href="https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwiujOSg_MLdAhUChOAKHRNIDjsQjRx6BAgBEAU&url=http%3A%2F%2Fvodacek.zvb.cz%2Farchiv%2F724.html&psig=AOvVaw18jR2Ua79DIleUUw25zpXc&ust=1537305726613590">Source</a>]
+
+                  <h3>3) Storing Data</h3>
+                  <p class="p_style">Our goal for this projects was to detect and recognize interaction between 2 persons. First I follow the same procedure as in <a target="_blank" href="https://www.mathworks.com/help/supportpkg/kinectforwindowsruntime/examples/plot-skeletons-with-the-kinect-v2.html"></a> to connect Kinect and collect 200 frames for each color and depth video objects.</p>
+                  <p class="p_style">Then I save metadata, colorImg inorder to draw the skeleton representaton on the colorImg (RGB data) by using metadata(depth data) as shown in below figure.</p>
+                  <img src="images/kinect_blog/skeleton_representation.jpg" alt="Skeleton Representation" />
+                  <p>Code snippet to get and save data. I prefer making a dedicated folder to store this data so just to have a clean storage. Such as I use kinect_data folder to save data.</p>
+                  <pre><code>
+[colorImg] = getdata(colorVid);
+[~, ~, metadata] = getdata(depthVid);
+save(kinect_data\metadata.mat, 'colorImg');
+save(kinect_data\colorImg.mat, 'metadata');
+                  </code></pre>
+                  <br/>
+                  <h5>Storing Joint Position (3D)</h5>
+                  <p class="p_style">Now, we need to store joints positions values in a specific format which large scale skeleton datasets such as <a target="_blank" href="http://www3.cs.stonybrook.edu/~kyun/research/kinect_interaction/index.html">SBU-Kinect</a>, <a target="_blank" href="http://www.icst.pku.edu.cn/struct/Projects/PKUMMD.html">PKU-MMD</a>, use to store data inorder to make it viable to be used in any machine learning methods without need of changing the data format or orientation. So we save video frames in rows while columns contains values of each joint. So, we have 3D(x,y,z) values of each joint and we have 25 joints for one person, so first 75 columns contains values for one person likewise other 75 columns contain values for second person and intotal we have 150 columns while we fixed frames to 200 so we have 200x175 dimension of data. It can be better seen in the following figure.</p>
+                  <img src=""/>
+                  <img src="images/kinect_blog/skeleton_data_save_format.png" alt="Skeleton Representation"><br/>
+                  [<a href="https://www.semanticscholar.org/paper/Co-occurrence-Feature-Learning-from-Skeleton-Data-Li-Zhong/1b10e59adfa3f0f7748f48e2e64e54db2a5362d3">Source</a>]
+                  <p class="p_style">I code like this to save data in text files.</p>
+                  <pre>
+                     <code>
+data = metadata; %making copy of data     
+m = 1; %iterates when a body is tracked in the frame
+clear data_joints_values %clearing the variable 
+for n = 1:framesPerTrig %loop runs for number of frames (e.g, 200)
+    currentframeMetadata = data(n);
+    %we first check if anybody is tracked
+    currentframeanyBodiesTracked = any(currentframeMetadata.IsBodyTracked ~= 0);
+    %currenttrackedBodies = find(currentframeMetadata.IsBodyTracked);
+    if currentframeanyBodiesTracked == 1 %if frame is not empty
+        data_color_joints = data(n).JointPositions; %we get data for each frame
+        i = 1; k = 2; l = 3; %iteration for x,y,z positions for first person repectively
+        ii = 76; kk = 77; ll = 78; %iteration for x,y,z positions for second person repectively
+        for j = 1:25
+            %saving data for first person
+            data_joints_values(m,i) = data_color_joints(j,1,trackedBodies(1));
+            data_joints_values(m,k) = data_color_joints(j,2,trackedBodies(1));
+            data_joints_values(m,l) = data_color_joints(j,3,trackedBodies(1));
+            
+            %saving data for second person
+            data_joints_values(m,ii) = data_color_joints(j,1,trackedBodies(2));
+            data_joints_values(m,kk) = data_color_joints(j,2,trackedBodies(2));
+            data_joints_values(m,ll) = data_color_joints(j,3,trackedBodies(2));
+            i = i+3; k = k+3; l = l+3;
+            ii = ii + 3; kk = kk + 3; ll  = ll + 3;
+        end
+            m = m+1;
+     end
+end
+data_save = data_joints_values; %variable to save data
+dlmwrite(kinect_data\data.txt, ' ') %saving data in file where each value is separated by space
+                     </code>
+                  </pre>
+
                   <p>Continue</p>
                </div>
 
