@@ -146,7 +146,7 @@
                <div class="twelve columns">
 
                   <!--<h3>University of Massachusetts, Dartmouth US</h3>-->
-                  <p>I have worked on Skeleton Based Action Recognition using Kinect V2 to determine the difference between large bechmark datasets such as <a href="http://www.icst.pku.edu.cn/struct/Projects/PKUMMD.html">PKU-MMD</a> and <a href="http://www3.cs.stonybrook.edu/~kyun/research/kinect_interaction/index.html">SBU-Kinect</a> dataset. First I have collected data using Kinect V2 using Matlab and then used a <a href="https://arxiv.org/abs/1804.06055">Convolutional Neural Network (CNN)</a> model for prediction. In this post, I will walk you with all the steps I followed and methods I used for this piece of work.</p>
+                  <p class="p_style">I have worked on Skeleton Based Action Recognition using Kinect V2 to determine the difference between large bechmark datasets such as <a href="http://www.icst.pku.edu.cn/struct/Projects/PKUMMD.html">PKU-MMD</a> and <a href="http://www3.cs.stonybrook.edu/~kyun/research/kinect_interaction/index.html">SBU-Kinect</a> dataset. First I have collected data using Kinect V2 using Matlab and then used a <a href="https://arxiv.org/abs/1804.06055">Convolutional Neural Network (CNN)</a> model for prediction. In this post, I will walk you with all the steps I followed and methods I used for this piece of work.</p>
                   <img src="images/kinect_blog/Kinect_V2.jpg" alt="Kinect V2">
                   [<a href="https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwj39vLT-8LdAhUNON8KHYDVA5AQjRx6BAgBEAU&url=https%3A%2F%2Fwww.ignatiuz.com%2Fblog%2Fnet%2Fkinect-v2-for-windows%2F&psig=AOvVaw2LSFOlh2FstmJjEtkZKCr-&ust=1537305510490132">Source</a>]
 
@@ -239,6 +239,21 @@ data_save = data_joints_values; %variable to save data
 dlmwrite(kinect_data\data.txt, ' ') %saving data in file where each value is separated by space
                      </code>
                   </pre>
+
+                <h3>Training and Testing CNN Model</h3>
+                <p class="p_style">I have followed a paper named <a target="_blank" href="https://arxiv.org/abs/1804.06055">Co-occurrence Feature Learning from Skeleton Data for Action Recognition and
+Detection with Hierarchical Aggregation</a> and also used its source code <a target="_blank" href="https://github.com/fandulu/Keras-for-Co-occurrence-Feature-Learning-from-Skeleton-Data-for-Action-Recognition">Github</a> to train UMassd-Kinect dataset.</p>
+				<p class="p_style">Howere this code is trained on SBU-Kinect dataset which consists of 15 body joint coordinates while UMassd-Kinect contains 25 body joints so I updated their model to train on 25 body joints. I also updated this code so that it can get data from Matlab at runtime and recognize the action in real time.</p>
+				<p class="p_style">Purpose of real time recognition is to present a study which can differentiate between synthetic data (taken in some laboratory or controlled lab environment) and non-synthetic data (real time without considering any lighting, illuminations, background, etc settings). This model seems to give good results on relatively small dataset.</p>
+
+				<h3>Code</h3>
+				<p class="p_style">Full code containing matalb and python files is uploaded on github <a target="_blank" href="https://github.com/chetankm1992/Keras-for-Co-occurrence-Feature-Learning-from-Skeleton-Data-for-Action-Recognition">URL.</a></p>
+				<ol>
+					<li>Live_Skeleton_Action_Recognition.ipynb</li>
+					<p style="text-align: justify;">After setting Kinect sensor and connecting it with Matalb code as described in above (1) and (2) steps, you can you use this code for live demo. This code contains the pre-training model (my_model.h5) on UMassd-Kinect dataset and it also calls Matlab function "live_demo.m" to get the data and matlab function initiates Kinect sensor to get the data at run time and sends it back to jupyter file. Then model gives the prediction results.</p>
+					<li>Co-occurrence Feature Learning for Action Recognition for Multi-View Dataset containing 25 (3D) Body Joints.ipynb</li>
+					<p style="text-align: justify; margin-bottom: 0px;">However, if you want to do the training by yourself then you can use this code to train the model from sketch. It uses data given under "data" folder which contains five classes (hand shake, point finger, giving copy, hug and tap back) taken by 5 different subjects and considered three different angles and backgrounds with variations. Dataset is also provided with train and test split. You can also use anyother dataset for training and testing the model.</p>
+				</ol>
 
                   <p>Continue</p>
                </div>
