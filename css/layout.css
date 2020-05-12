@@ -229,7 +229,7 @@ ul#nav li.current a { color: #F06000; }
    //width: 36.33%;
    //padding-top: 6px;
 }
-#about .main-col { padding-right: 5%; }
+#about .main-col {//padding-right: 5%; }
 #about .download .button {
    margin-top: 6px;
    background: #444;
@@ -471,6 +471,7 @@ ul#nav li.current a { color: #F06000; }
    padding-top: 20px;
    //padding-bottom: 72px;
    overflow: hidden;
+   padding-bottom: 20px;
 }
 
 #publication a, #publication a:visited  { color: #11ABB0; }
@@ -490,7 +491,7 @@ ul#nav li.current a { color: #F06000; }
 }
 
 #publication .header-col { padding-top: 9px; }
-#publication .main-col { padding-right: 10%; }
+#publication .main-col { //padding-right: 10%; }
 
 #publication .education, .work .kinect_blog {
    /*margin-bottom: 48px;
