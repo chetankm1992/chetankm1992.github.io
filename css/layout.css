@@ -1397,3 +1397,7 @@ footer .social-links li:first-child { margin-left: 0; }
 #dummy{
   color:blue;
 }
+
+#news ul li {
+	margin-bottom:10px;
+}
